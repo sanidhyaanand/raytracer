@@ -9,7 +9,6 @@
 
 # Binaries and outputs #
 ########################
-bin/*.exe
 *.ppm
 
 # Solution files #
