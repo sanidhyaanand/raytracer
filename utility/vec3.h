@@ -10,16 +10,16 @@ public:
 
     // Constructors
     vec3() : e{ 0,0,0 } {}
-    vec3(float e0, float e1, float e2) : e{ e0, e1, e2 } {}
+    vec3(double e0, double e1, double e2) : e{ e0, e1, e2 } {}
 
     // Functions defining components of vector
-    float x() const { 
+    double x() const { 
         return e[0]; 
     }
-    float y() const { 
+    double y() const { 
         return e[1]; 
     }
-    float z() const { 
+    double z() const { 
         return e[2]; 
     }
 
@@ -29,10 +29,10 @@ public:
     }
 
     // Function enabling indexing of vectors (eg. vector[1] returns second element and so on)
-    float operator[](int i) const { 
+    double operator[](int i) const { 
         return e[i]; 
     }
-    float& operator[](int i) { 
+    double& operator[](int i) { 
         return e[i]; 
     }
 
@@ -45,7 +45,7 @@ public:
     }
 
     // Function defining multiplication of scalar to vector
-    vec3& operator*=(const float t) {
+    vec3& operator*=(const double t) {
         e[0] *= t;
         e[1] *= t;
         e[2] *= t;
@@ -53,22 +53,22 @@ public:
     }
 
     // Function defining division of a vector by scalar
-    vec3& operator/=(const float t) {
+    vec3& operator/=(const double t) {
         return *this *= 1 / t;
     }
 
     // Function defining length or magnitude of a vector
-    float length() const {
+    double length() const {
         return sqrt(length_squared());
     }
 
     // Function defining square of magnitude of the vector
-    float length_squared() const {
+    double length_squared() const {
         return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
     }
 
 public:
-    float e[3];
+    double e[3];
 };
 
 // type aliases for vec3
@@ -100,20 +100,20 @@ inline vec3 operator*(const vec3& u, const vec3& v) {
 }
 
 // scalar multiplication
-inline vec3 operator*(const float t, const vec3& u) {
+inline vec3 operator*(const double t, const vec3& u) {
     return vec3(t * u.e[0], t * u.e[1], t * u.e[2]);
 }
 
-inline vec3 operator*(const vec3& v, float t) {
+inline vec3 operator*(const vec3& v, double t) {
     return t * v;
 }
 
 // scalar division
-inline vec3 operator/(const vec3& v, float t) {
+inline vec3 operator/(const vec3& v, double t) {
     return 1 / t * v;
 }
 
-inline float dot(const vec3& v, const vec3& u) {
+inline double dot(const vec3& v, const vec3& u) {
     return u.e[0] * v.e[0] + u.e[1] * v.e[1] + u.e[2] * v.e[2];
 }
 

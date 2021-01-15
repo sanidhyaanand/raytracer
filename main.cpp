@@ -1,43 +1,38 @@
-#include<iostream>
+#include <iostream>
 #include "utility/vec3.h"
 #include "utility/color.h"
 #include "utility/ray.h"
-
-float hit_sphere(const point3& center, float radius, const ray& r) {
-	vec3 oc = r.origin() - center;
-	auto a = dot(r.direction(), r.direction());
-	auto b = 2.0f * dot(oc, r.direction());
-	auto c = dot(oc, oc) - radius * radius;
-	auto discriminant = b * b - 4.0f * a * c;
-	if (discriminant < 0) return -1.0f;
-	else return (-b - sqrt(discriminant)) / (2.0f * a);
-}
+#include "utility/sphere.h"
+#include "utility/hittable.h"
 
 color ray_color(const ray& ray) {
-	auto centre = point3(0.0, 0.0, -1.0);
-	auto t = hit_sphere(centre, 0.5, ray);
+	auto center = point3(0.0, 0.0, -1.0);
 
-	if (t > 0.0f) {
-		auto norm = normalize(ray.at(t) - vec3(centre));
+	hit_record rec;
+	sphere sphere(center, 0.5);
+	auto check = sphere.hit(ray, 0.001, double(INFINITY), rec);
+
+	if (check == true) {
+		auto norm = normalize(rec.normal);
 		return 0.5 * color(norm.x() + 1, norm.y() + 1, norm.z() + 1);
 	}
 
 	vec3 unit_dir = normalize(ray.direction());
 	auto q = 0.5 * (unit_dir.y() + 1.0);
-	return (1.0 - q) * color(1.0, 1.0, 1.0) + q * color(1.0, 0.7, 0.3);
+	return (1.0 - q) * color(1.0, 1.0, 1.0) + q * color(0.3, 0.7, 1.0);
 }
 
 int main(){
 	
 	// Image
-	const float aspect_ratio = 16.0 / 9.0;
+	const double aspect_ratio = 16.0 / 9.0;
 	const int img_width = 400;
 	const int img_height = static_cast<int>(img_width / aspect_ratio);
 
 	// Camera
-	float viewport_height = 2.0;
-	float viewport_width = aspect_ratio * viewport_height;
-	float focal_length = 1.0;
+	double viewport_height = 2.0;
+	double viewport_width = aspect_ratio * viewport_height;
+	double focal_length = 1.0;
 
 	auto origin = point3(0.0, 0.0, 0.0);
 	auto horizontal = vec3(viewport_width, 0, 0);
@@ -53,11 +48,13 @@ int main(){
 		for (int i = 0; i < img_width; i++) {
 
 			// Pixel positions
-			auto u = float(i) / (img_width - 1);
-			auto v = float(j) / (img_height - 1);
+			auto u = double(i) / (img_width - 1);
+			auto v = double(j) / (img_height - 1);
 
+			// Initialise ray
 			ray r(origin, lower_left_corner + u * horizontal + v * vertical - origin);
 
+			// Store and write color values
 			color pixel_color = ray_color(r);
 			write_color(std::cout, pixel_color);
 		}
