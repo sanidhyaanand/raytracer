@@ -1,5 +1,5 @@
 # Raytracer
-This is a raytracer written in c++. As of now it only renders compiled static files (images).<br>
+This is my implementation of the ray tracer from the book "Ray Tracing in One Weekend".<br>
 ## Installation and building
 * To build in root directory
 		
@@ -9,7 +9,4 @@ This is a raytracer written in c++. As of now it only renders compiled static fi
 
 		make test
     
-* Lastly, open image file with image loading softwares (like Photoshop or GIMP) or an online ppm viewer
-    
-(blah blah ppm more like poor primitive muck yes I know alright? I will look at implementing with modern <br>
-packages and libraries later, getting basic rendering functionality down with raytracing for now)    
+* Lastly, open image file with image loading softwares (like Photoshop or GIMP) or an online ppm viewer  
